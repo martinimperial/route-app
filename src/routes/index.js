@@ -5,6 +5,6 @@ import MainRoutes from './MainRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
-// export default function ThemeRoutes() {
-//   return useRoutes([MainRoutes]);
-// }
+export default function ThemeRoutes() {
+  return useRoutes([MainRoutes]);
+}
