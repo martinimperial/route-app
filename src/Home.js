@@ -23,15 +23,23 @@ const Home = () => {
   }
 
   useEffect(() => {
+    if(resourceType === "localposts") {
+      fetch(`http://localhost:8080/post`)
+      .then((response) => response.json())
+      .then((json) => {setItems(json.posts); console.log(JSON.stringify(json))});      
+    }
+    else{
     fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
       .then((response) => response.json())
-      .then((json) => setItems(json));
+      .then((json) => {setItems(json); console.log(JSON.stringify(json))});
+    }
   }, [resourceType]);
 
   return (
     <>
       <Grid container spacing={6}>
         <Grid item xs={12}>
+        <button onClick={() => setResourceType("localposts")}>Local Posts</button>
         <button onClick={() => setResourceType("posts")}>Posts</button>
         <button onClick={() => setResourceType("users")}>Users</button>
         <button onClick={() => setResourceType("comments")}>Comments</button>
@@ -46,6 +54,14 @@ const Home = () => {
               );
             })
           : resourceType === "posts"
+          ? items.map((item, index) => {
+              return (
+                <Grid item lg={3} sm={4} xs={12} key={index} sx={{ marginBottom: 2, marginLeft: 2 }}>
+                  <Post item={item} />
+                </Grid>
+              );
+            })
+          :resourceType === "localposts"
           ? items.map((item, index) => {
               return (
                 <Grid item lg={3} sm={4} xs={12} key={index} sx={{ marginBottom: 2, marginLeft: 2 }}>
